@@ -8,9 +8,13 @@
   <body>
     <div class="sidebar">
       <div>
-        <div id="my-day">My Day</div>
-        <div id="important">Important</div>
-        <div id="all-tasks">All Tasks</div>
+        <div id="my-day" class="display-list" data-active="my-day">My Day</div>
+        <div id="important" class="display-list" data-active="important">
+          Important
+        </div>
+        <div id="all-tasks" class="display-list" data-active="all-tasks">
+          All Tasks
+        </div>
       </div>
       <div>
         <h1>My Projects</h1>
@@ -22,6 +26,11 @@
         <button id="cancel-project">×</button>
         <button id="add-project">+</button>
       </form>
+    </div>
+
+    <div class="content">
+      <h2 id="title"></h2>
+      <ul id="tasks" data-current="my-day"></ul>
     </div>
   </body>
 </html>
