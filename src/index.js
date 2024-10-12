@@ -4,6 +4,19 @@ import Collections from "./collections";
 import './style.css';
 
 const collections = Collections();
+const t = Task();
+t.setTitle('Task 1')
+t.setDueDate('2024-12-02');
+collections.getMyDay().addTask(t);
+const a = Task();
+a.setTitle('Task A')
+a.setDueDate('2024-11-02');
+collections.getMyDay().addTask(a);
+
+const b = Task();
+b.setTitle('Task A')
+b.setDueDate('2024-12-25');
+collections.getImportant().addTask(b);
 
 //Create New List
 const newProjectBtn = document.getElementById('add-project');
@@ -64,6 +77,65 @@ function displayProjects() {
     projectOnClick();
 }
 
+//Add Task
+(function addNewTask() {
+    const currentList = document.getElementById('tasks');
+    const newTitle = document.getElementById('task-title');
+    const newDescription = document.getElementById('task-description');
+    const newDate = document.getElementById('task-date');
+    const newPriority = document.getElementById('task-priority');
+    const addTaskBtn = document.getElementById('add-task');
+
+    addTaskBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const newTask = Task();
+        if(newTitle.value === '') return;
+        newTask.setTitle(newTitle.value.trim());
+        newTask.setDescription(newDescription.value.trim());
+        newTask.setDueDate(newDate.value);
+        newTask.setPriority(newPriority.value);
+
+        const active = currentList.dataset.current;
+
+        if(active === 'my-day') {
+            collections.getMyDay().addTask(newTask);       
+        } else if(active === 'important') {
+            collections.getImportant().addTask(newTask);
+        } else if(active === 'all-tasks') {
+            collections.getAllTasks().addTask(newTask);
+        }  else if(+active >= 0 || +active <= collections.getMyProjects().length) {
+            collections.getMyProjects()[active].addTask(newTask);
+        }
+        displayTasks(active);
+    })
+})();
+
+//Remove Task
+function deleteTask() {
+    const deleteTaskBtns = document.querySelectorAll('.delete-task');
+    const currentList = document.getElementById('tasks');
+    const active = currentList.dataset.current;
+
+    deleteTaskBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const targ = e.target;
+            const index = targ.dataset.removetask;
+            
+            if(active === 'my-day') {
+                collections.getMyDay().removeTask(index);      
+            } else if(active === 'important') {
+                collections.getImportant().removeTask(index);
+            } else if(active === 'all-tasks') {
+                collections.getAllTasks().removeTask(index);
+            }  else if(+active >= 0 || +active <= collections.getMyProjects().length) {
+                collections.getMyProjects()[active].removeTask(index);
+            }
+    
+            displayTasks(active);
+        })
+    })
+}
+
 //Display Tasks
 function displayTasks(selected) {
     let proj;
@@ -93,19 +165,35 @@ function displayTasks(selected) {
         item.classList.add('task-item');
         item.setAttribute('data-index', `${taskList.indexOf(task)}`);
 
-        const name = document.createElement('span');
-        name.setAttribute('data-index', `${taskList.indexOf(task)}`);
-        name.textContent = task.getTitle();
-        item.appendChild(name);
+        const checkbox = document.createElement('input');
+        checkbox.setAttribute('type', `checkbox`);
+        checkbox.setAttribute('id', `check-${taskList.indexOf(task)}`);
+        item.appendChild(checkbox);
+
+        const text = document.createElement('div');
+        text.classList.add('task-text')
+
+        const title = document.createElement('div');
+        title.setAttribute('data-index', `${taskList.indexOf(task)}`);
+        title.textContent = task.getTitle();
+        text.appendChild(title);
+
+        const date = document.createElement('div');
+        date.classList.add('due-date');
+        date.textContent = task.getDueDate();
+        text.appendChild(date);
+
+        item.appendChild(text);
 
         const deleteBtn = document.createElement('button');
-        deleteBtn.setAttribute('data-removeTask', `${taskList.indexOf(task)}`);
+        deleteBtn.setAttribute('data-removetask', `${taskList.indexOf(task)}`);
         deleteBtn.classList.add('delete-task');
         deleteBtn.textContent = '×';
         item.appendChild(deleteBtn);
 
         destination.appendChild(item);
     })
+    deleteTask();
 }
 displayTasks('my-day');
 
