@@ -7,15 +7,21 @@ const collections = Collections();
 const t = Task();
 t.setTitle('Task 1')
 t.setDueDate('2024-12-02');
+t.setDescription('This is the description');
+t.setPriority('low');
 collections.getMyDay().addTask(t);
 const a = Task();
 a.setTitle('Task A')
 a.setDueDate('2024-11-02');
+a.setDescription('This is the description');
+a.setPriority('medium');
 collections.getMyDay().addTask(a);
 
 const b = Task();
 b.setTitle('Task A')
 b.setDueDate('2024-12-25');
+b.setDescription('This is the description');
+b.setPriority('high');
 collections.getImportant().addTask(b);
 
 //Create New List
@@ -48,6 +54,36 @@ function deleteProjectEventListener() {
     })
 }
 
+//Edit Project
+function editProject() {
+    const editProjectBtn = document.querySelectorAll('.edit-project')
+    const newProjectName = document.getElementById('edit-project-name');
+    const saveProjectEdit = document.getElementById('save-project-edit');
+
+    editProjectBtn.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const projectIndex = btn.dataset.edit;
+            const proj = collections.getMyProjects()[projectIndex];
+            newProjectName.value = proj.getName();
+            saveProjectEdit.dataset.edit = projectIndex;
+        })
+
+        saveProjectEdit.addEventListener('click', (e) => {
+            e.preventDefault()
+            if(newProjectName.value === '') return;
+            const proj = collections.getMyProjects()[e.target.dataset.edit];
+            console.log(e.target.dataset.edit)
+            console.log(proj.getName())
+            proj.setName(newProjectName.value);
+            console.log(proj.getName())
+
+            displayProjects();
+
+            newProjectName.value = '';
+        })
+    })
+}
+
 //Display My Projects
 function displayProjects() {
     const destination = document.getElementById('my-projects');
@@ -65,6 +101,12 @@ function displayProjects() {
         name.textContent = proj.getName();
         item.appendChild(name);
 
+        const editBtn = document.createElement('button');
+        editBtn.setAttribute('data-edit', `${projects.indexOf(proj)}`);
+        editBtn.classList.add('edit-project');
+        editBtn.textContent = 'Edit';
+        item.appendChild(editBtn);
+
         const deleteBtn = document.createElement('button');
         deleteBtn.setAttribute('data-remove', `${projects.indexOf(proj)}`);
         deleteBtn.classList.add('delete-project');
@@ -73,6 +115,7 @@ function displayProjects() {
 
         destination.appendChild(item);
     })
+    editProject();
     deleteProjectEventListener();
     projectOnClick();
 }
@@ -107,6 +150,11 @@ function displayProjects() {
             collections.getMyProjects()[active].addTask(newTask);
         }
         displayTasks(active);
+
+        newTitle.value = '';
+        newDescription.value = '';
+        newDate.value = '';
+        newPriority.value = '';
     })
 })();
 
@@ -132,6 +180,61 @@ function deleteTask() {
             }
     
             displayTasks(active);
+        })
+    })
+}
+
+//Edit Task
+function editTask() {
+    const editBtn = document.querySelectorAll('.edit-task');
+    const currentList = document.getElementById('tasks').dataset.current;
+    const newTitle = document.getElementById('edit-task-title');
+    const newDescription = document.getElementById('edit-task-description');
+    const newDate = document.getElementById('edit-task-date');
+    const newPriority = document.getElementById('edit-task-priority');
+    const saveBtn = document.getElementById('save-task-edit');
+
+    editBtn.forEach(btn => {
+        let proj;
+        if(currentList === 'my-day') {
+            proj = collections.getMyDay();       
+        } else if(currentList === 'important') {
+            proj = collections.getImportant();
+        } else if(currentList === 'all-tasks') {
+            proj = collections.getAllTasks();
+        }  else if(+currentList >= 0 || +currentList <= collections.getMyProjects().length) {
+            proj = collections.getMyProjects()[currentList];
+        }
+
+        btn.addEventListener('click', () => {
+            const taskIndex = btn.dataset.edit;
+    
+            const task = proj.getTasks()[taskIndex];
+            
+            newTitle.value = task.getTitle();
+            newDescription.value = task.getDescription();
+            newDate.value = task.getDueDate();
+            newPriority.value = task.getPriority();
+
+            saveBtn.dataset.edit = taskIndex;
+        })
+        saveBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if(newTitle.value === '') return;
+
+            const task = proj.getTasks()[e.target.dataset.edit];
+
+            task.setTitle(newTitle.value);
+            task.setDescription(newDescription.value);
+            task.setDueDate(newDate.value);
+            task.setPriority(newPriority.value);
+            
+            displayTasks(currentList);
+
+            newTitle.value = '';
+            newDescription.value = '';
+            newDate.value = '';
+            newPriority.value = '';
         })
     })
 }
@@ -185,6 +288,18 @@ function displayTasks(selected) {
 
         item.appendChild(text);
 
+        const description = document.createElement('div');
+        description.classList.add('description');
+        description.setAttribute('data-show', `${taskList.indexOf(task)}`);
+        description.textContent = task.getDescription();
+        item.appendChild(description);
+
+        const editBtn = document.createElement('button');
+        editBtn.setAttribute('data-edit', `${taskList.indexOf(task)}`);
+        editBtn.classList.add('edit-task');
+        editBtn.textContent = 'Edit';
+        item.appendChild(editBtn);
+
         const deleteBtn = document.createElement('button');
         deleteBtn.setAttribute('data-removetask', `${taskList.indexOf(task)}`);
         deleteBtn.classList.add('delete-task');
@@ -193,6 +308,7 @@ function displayTasks(selected) {
 
         destination.appendChild(item);
     })
+    editTask();
     deleteTask();
 }
 displayTasks('my-day');
