@@ -1,0 +1,233 @@
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    font: inherit;
+    box-sizing: border-box;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+button {
+    cursor: pointer;
+}
+
+body {
+    display: grid;
+    grid-template-columns: minmax(5rem, 20rem) 1fr;
+    min-height: 100svh;
+    border: 2px solid salmon;
+}
+
+.sidebar {
+    display: grid;
+    grid-auto-rows: min-content;
+    margin: 2rem 1rem;
+}
+
+.projects-container {
+    margin-top: 2rem;
+}
+
+.main-projects,
+.my-projects {
+    display: grid;
+    gap: .3rem;
+    cursor: context-menu;
+}
+.main-projects > div,
+.my-projects > .display-project {
+    padding: .5rem;
+}
+
+.main-projects > div:hover,
+.my-projects > .display-project:hover {
+    background-color: hsl(0, 0%, 98%);
+}
+
+.my-projects > .display-project {
+    display: flex;
+    gap: .3rem;
+}
+
+.project-name {
+    flex: 1;
+}
+
+.edit-project,
+.delete-project {
+    border-style: none;
+    background: none;
+    padding-inline: .3rem;
+}
+
+.edit-project {
+    font-size: .8rem;
+}
+.edit-project:hover {
+    font-weight: 600;
+}
+
+.delete-project {
+    font-size: 1.1rem;
+}
+
+.delete-project:hover {
+    font-weight: 700;
+    color: hsl(0, 100%, 40%);
+}
+
+.new-list-btn {
+    border-style: none;
+    padding: .3rem .5rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.new-list-btn > span {
+    font-size: 1.5rem;
+}
+
+.edit-list-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .3rem;
+}
+
+.edit-list-form > input {
+    grid-column: 1/3;
+}
+
+.cancel-project-edit {
+    justify-self: start;
+}
+
+.save-project-edit {
+    justify-self: end;
+}
+
+.new-list-form {
+    display: grid;
+    grid-template-columns: 1fr min-content;
+    gap: .3rem;
+}
+
+.new-list-form > input {
+    grid-column: 1/3;
+}
+
+.cancel-project {
+    justify-self: end;
+}
+
+/*------- Content -------*/
+
+.content {
+    display: grid;
+    grid-auto-rows: min-content;
+    margin-top: 2rem;
+    padding: 2rem 2rem 0;
+}
+
+.content .title {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+}
+
+.tasks {
+    display: grid;
+    gap: .3rem;
+}
+
+.task-item {
+    display: grid;
+    grid-template-columns: min-content 1fr repeat(2, min-content);
+    border: 1px solid paleturquoise;
+}
+
+.task-item:hover {
+    background-color: hsl(0, 0%, 98%);
+}
+
+.task-text {
+    margin-left: .8rem;
+}
+
+.description {
+    grid-row: 2;
+    grid-column: 1/-1;
+}
+
+.edit-task,
+.delete-task {
+    align-self: start;
+    border-style: none;
+    background: none;
+    padding: .1rem .3rem;
+}
+
+.edit-task {
+    margin-right: .3rem;
+}
+
+.edit-task:hover {
+    font-weight: 600;
+}
+
+.delete-task:hover {
+    font-weight: 700;
+    color: hsl(0, 100%, 40%);
+}
+
+.edit-task-form,
+.task-form {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    max-width: 30rem;
+}
+
+.edit-task-title,
+.task-title {
+    grid-column: 1/-1;
+}
+
+.edit-task-description,
+.task-description {
+    grid-row: 2/4;
+    grid-column: 1/4;
+}
+
+.edit-task-priority,
+.task-priority {
+    justify-self: end;
+}
+
+.cancel-task-edit,
+.cancel-task {
+    grid-column: 1/3;
+}
+
+.save-task-edit,
+.add-task {
+    grid-column: 3/5;
+}
+
+.new-task {
+    border-style: none;
+    text-align: start;
+    padding: .5rem;
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.new-task > span {
+    font-size: 1.5rem;
+}

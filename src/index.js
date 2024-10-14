@@ -4,6 +4,8 @@ import Collections from "./collections";
 import './style.css';
 
 const collections = Collections();
+
+//Placeholders
 const t = Task();
 t.setTitle('Task 1')
 t.setDueDate('2024-12-02');
@@ -23,6 +25,20 @@ b.setDueDate('2024-12-25');
 b.setDescription('This is the description');
 b.setPriority('high');
 collections.getImportant().addTask(b);
+
+const personal = Project();
+personal.setName('Personal');
+collections.addProject(personal);
+
+const work = Project();
+work.setName('Work');
+collections.addProject(work);
+
+const health = Project();
+health.setName('Health');
+collections.addProject(health);
+displayProjects();
+
 
 //Create New List
 const newProjectBtn = document.getElementById('add-project');
@@ -97,6 +113,7 @@ function displayProjects() {
         item.setAttribute('data-index', `${projects.indexOf(proj)}`);
 
         const name = document.createElement('span');
+        name.classList.add('project-name');
         name.setAttribute('data-index', `${projects.indexOf(proj)}`);
         name.textContent = proj.getName();
         item.appendChild(name);
@@ -277,6 +294,7 @@ function displayTasks(selected) {
         text.classList.add('task-text')
 
         const title = document.createElement('div');
+        title.classList.add('task-title');
         title.setAttribute('data-index', `${taskList.indexOf(task)}`);
         title.textContent = task.getTitle();
         text.appendChild(title);

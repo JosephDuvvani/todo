@@ -7,7 +7,7 @@
   </head>
   <body>
     <div class="sidebar">
-      <div>
+      <div class="main-projects">
         <div id="my-day" class="display-list" data-active="my-day">My Day</div>
         <div id="important" class="display-list" data-active="important">
           Important
@@ -16,7 +16,7 @@
           All Tasks
         </div>
       </div>
-      <div>
+      <div class="projects-container">
         <h1>My Projects</h1>
 
         <form action="" class="edit-list-form">
@@ -26,27 +26,34 @@
             autocomplete="off"
             required
           />
-          <button id="cancel-projrct-edit">Cancel</button>
-          <button id="save-project-edit">Save</button>
+          <button id="cancel-project-edit" class="cancel-project-edit">
+            Cancel
+          </button>
+          <button id="save-project-edit" class="save-project-edit">Save</button>
         </form>
 
-        <ul id="my-projects"></ul>
+        <ul id="my-projects" class="my-projects"></ul>
       </div>
-      <button id="new-list"><span>+</span> New List</button>
+
+      <button id="new-list" class="new-list-btn">
+        <span>+</span> New List
+      </button>
+
       <form action="" class="new-list-form">
         <input type="text" id="new-project-name" autocomplete="off" required />
-        <button id="cancel-project">×</button>
-        <button id="add-project">+</button>
+        <button id="cancel-project" class="cancel-project">×</button>
+        <button id="add-project" class="add-project">+</button>
       </form>
     </div>
 
     <div class="content">
-      <h2 id="title"></h2>
+      <h2 id="title" class="title"></h2>
 
-      <form action="" id="edit-task-form">
+      <form action="" id="edit-task-form" class="edit-task-form">
         <input
           type="text"
           id="edit-task-title"
+          class="edit-task-title"
           placeholder="Title"
           autocomplete="off"
           required
@@ -55,13 +62,18 @@
         <textarea
           type="text"
           id="edit-task-description"
+          class="edit-task-description"
           placeholder="Description (optional)"
           autocomplete="off"
         ></textarea>
 
-        <input type="date" id="edit-task-date" />
+        <input type="date" id="edit-task-date" class="edit-task-date" />
 
-        <select name="edit_priority" id="edit-task-priority">
+        <select
+          name="edit_priority"
+          id="edit-task-priority"
+          class="edit-task-priority"
+        >
           <option value="" disabled selected hidden>Priority</option>
           <option value="low">Low</option>
           <option value="medium">Medium</option>
@@ -69,18 +81,19 @@
           <option value="urgent">Urgent</option>
         </select>
 
-        <button id="cancel-task-edit">Cancel</button>
-        <button id="save-task-edit">Save</button>
+        <button id="cancel-task-edit" class="cancel-task-edit">Cancel</button>
+        <button id="save-task-edit" class="save-task-edit">Save</button>
       </form>
 
-      <ul id="tasks" data-current="my-day"></ul>
+      <ul id="tasks" class="tasks" data-current="my-day"></ul>
 
-      <button id="new-task">+ New Task</button>
+      <button id="new-task" class="new-task"><span>+</span> New Task</button>
 
-      <form action="" id="task-form">
+      <form action="" id="task-form" class="task-form">
         <input
           type="text"
           id="task-title"
+          class="task-title"
           placeholder="Title"
           autocomplete="off"
           required
@@ -89,13 +102,14 @@
         <textarea
           type="text"
           id="task-description"
+          class="task-description"
           placeholder="Description (optional)"
           autocomplete="off"
         ></textarea>
 
-        <input type="date" id="task-date" />
+        <input type="date" id="task-date" class="task-date" />
 
-        <select name="priority" id="task-priority">
+        <select name="priority" id="task-priority" class="task-priority">
           <option value="" disabled selected hidden>Priority</option>
           <option value="low">Low</option>
           <option value="medium">Medium</option>
@@ -103,8 +117,8 @@
           <option value="urgent">Urgent</option>
         </select>
 
-        <button id="cancel-task">×</button>
-        <button id="add-task">+</button>
+        <button id="cancel-task" class="cancel-task">×</button>
+        <button id="add-task" class="add-task">+</button>
       </form>
     </div>
   </body>
