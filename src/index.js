@@ -2,6 +2,7 @@ import Project from "./project";
 import Task from "./task";
 import Collections from "./collections";
 import './style.css';
+import { ta } from "date-fns/locale";
 
 const collections = Collections();
 
@@ -26,19 +27,67 @@ b.setDescription('This is the description');
 b.setPriority('high');
 collections.getImportant().addTask(b);
 
-const personal = Project();
-personal.setName('Personal');
-collections.addProject(personal);
+// const personal = Project();
+// personal.setName('Personal');
+// collections.addProject(personal);
 
-const work = Project();
-work.setName('Work');
-collections.addProject(work);
+// const work = Project();
+// work.setName('Work');
+// collections.addProject(work);
 
-const health = Project();
-health.setName('Health');
-collections.addProject(health);
-displayProjects();
+// const health = Project();
+// health.setName('Health');
+// collections.addProject(health);
+// displayProjects();
 
+//Local Storage
+
+if(!localStorage.getItem('projects')) {
+    populateStorage()
+}   else {
+    checkStorage();
+    displayProjects()
+}
+
+function populateStorage() {
+    const allProjects = collections.getMyProjects();
+    const store = JSON.stringify(allProjects.map(proj =>
+                    JSON.stringify({
+                        name : proj.getName(),
+                        tasks: proj.getTasks().map(task => JSON.stringify(
+                            {
+                                title : task.getTitle(),
+                                description : task.getDescription(),
+                                date : task.getDueDate(),
+                                priority : task.getPriority()
+                            }
+                        ))                     
+                    }
+                )));
+    localStorage.setItem('projects', store);
+}
+
+function checkStorage() {
+    const projects = JSON.parse(localStorage.getItem('projects'));
+
+    projects.forEach(proj => {
+        const project = Project();
+        project.setName(JSON.parse(proj).name);
+        collections.addProject(project);
+
+        const tasks = JSON.parse(proj).tasks;
+
+        tasks.forEach(task => {
+            const newTask = Task();
+            newTask.setTitle(JSON.parse(task).title);
+            newTask.setDescription(JSON.parse(task).description);
+            newTask.setDueDate(JSON.parse(task).date);
+            newTask.setPriority(JSON.parse(task).priority);
+
+            project.addTask(newTask);
+        })
+    })
+}
 
 //Create New List
 const newProjectBtn = document.getElementById('add-project');
@@ -51,6 +100,8 @@ newProjectBtn.addEventListener('click', (e) => {
     const newProject = Project();
     newProject.setName(nameInput.value.trim());
     collections.addProject(newProject);
+
+    populateStorage();
     
     displayProjects();
 })
@@ -65,6 +116,7 @@ function deleteProjectEventListener() {
             const index = targ.dataset.remove;
             collections.removeProject(index);
     
+            populateStorage();
             displayProjects();
         })
     })
@@ -93,6 +145,7 @@ function editProject() {
             proj.setName(newProjectName.value);
             console.log(proj.getName())
 
+            populateStorage();
             displayProjects();
 
             newProjectName.value = '';
@@ -166,6 +219,8 @@ function displayProjects() {
         }  else if(+active >= 0 || +active <= collections.getMyProjects().length) {
             collections.getMyProjects()[active].addTask(newTask);
         }
+
+        populateStorage();
         displayTasks(active);
 
         newTitle.value = '';
@@ -196,6 +251,7 @@ function deleteTask() {
                 collections.getMyProjects()[active].removeTask(index);
             }
     
+            populateStorage();
             displayTasks(active);
         })
     })
@@ -225,7 +281,7 @@ function editTask() {
 
         btn.addEventListener('click', () => {
             const taskIndex = btn.dataset.edit;
-    
+
             const task = proj.getTasks()[taskIndex];
             
             newTitle.value = task.getTitle();
@@ -238,6 +294,17 @@ function editTask() {
         saveBtn.addEventListener('click', (e) => {
             e.preventDefault();
             if(newTitle.value === '') return;
+            const currentList = document.getElementById('tasks').dataset.current;
+
+            if(currentList === 'my-day') {
+                proj = collections.getMyDay();       
+            } else if(currentList === 'important') {
+                proj = collections.getImportant();
+            } else if(currentList === 'all-tasks') {
+                proj = collections.getAllTasks();
+            }  else if(+currentList >= 0 || +currentList <= collections.getMyProjects().length) {
+                proj = collections.getMyProjects()[currentList];
+            }
 
             const task = proj.getTasks()[e.target.dataset.edit];
 
@@ -245,7 +312,8 @@ function editTask() {
             task.setDescription(newDescription.value);
             task.setDueDate(newDate.value);
             task.setPriority(newPriority.value);
-            
+
+            populateStorage();
             displayTasks(currentList);
 
             newTitle.value = '';
