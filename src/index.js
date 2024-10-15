@@ -324,6 +324,22 @@ function editTask() {
     })
 }
 
+//Show/hide Description
+
+function toggleDescription() {
+    const tasks = document.querySelectorAll('.task-item');
+    tasks.forEach(task => {
+        task.addEventListener('click', () => {
+            const descr = task.querySelector('.description');
+            if(descr.className.includes('show')) {
+                descr.classList.toggle('show', false);
+            } else {
+                descr.classList.toggle('show');
+            }
+        })
+    })
+}
+
 //Display Tasks
 function displayTasks(selected) {
     let proj;
@@ -358,8 +374,16 @@ function displayTasks(selected) {
         checkbox.setAttribute('id', `check-${taskList.indexOf(task)}`);
         item.appendChild(checkbox);
 
+        const label = document.createElement('label');
+        label.setAttribute('for', `check-${taskList.indexOf(task)}`);
+        item.appendChild(label);
+
+        const customCheckbox = document.createElement('span');
+        customCheckbox.classList.add('custom-checkbox');
+        label.appendChild(customCheckbox);
+
         const text = document.createElement('div');
-        text.classList.add('task-text')
+        text.classList.add('task-text');
 
         const title = document.createElement('div');
         title.classList.add('task-title');
@@ -377,7 +401,9 @@ function displayTasks(selected) {
         const description = document.createElement('div');
         description.classList.add('description');
         description.setAttribute('data-show', `${taskList.indexOf(task)}`);
-        description.textContent = task.getDescription();
+        const descriptionText = document.createElement('div');
+        descriptionText.textContent = task.getDescription();
+        description.appendChild(descriptionText);
         item.appendChild(description);
 
         const editBtn = document.createElement('button');
@@ -394,6 +420,7 @@ function displayTasks(selected) {
 
         destination.appendChild(item);
     })
+    toggleDescription();
     editTask();
     deleteTask();
 }

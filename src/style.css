@@ -148,19 +148,98 @@ body {
     display: grid;
     grid-template-columns: min-content 1fr repeat(2, min-content);
     border: 1px solid paleturquoise;
+    cursor: context-menu;
+    position: relative;
+    padding: .5rem .8rem;
 }
 
 .task-item:hover {
     background-color: hsl(0, 0%, 98%);
 }
 
+[type="checkbox"] {
+    opacity: 0;
+    position: absolute;
+    width: 0;
+    height: 0;
+}
+
+.task-item label {
+    align-self: center;
+}
+
+.custom-checkbox {
+    --size: 1em;
+    width: var(--size);
+    height: var(--size);
+    border: 2px solid currentColor;
+    border-radius: 20%;
+    display: inline-block;
+    transition: transform 150ms ease-in;
+}
+
+.custom-checkbox:hover {
+    transform: scale(.9);
+    color: var(--clr-accent-alpha);
+}
+
+[type="checkbox"]:focus + label .custom-checkbox {
+    transform: translateX(0.2em);
+    color: var(--clr-accent-alpha, silver); 
+}
+
+[type="checkbox"]:checked + label .custom-checkbox {
+    background-color: var(--clr-accent-alpha, green);
+    border-color: var(--clr-accent-alpha, paleturquoise);
+    box-shadow: inset  0 0 0 2px hsl(0, 0%, 100%);
+}
+
+[type="checkbox"]:checked + label,
+[type="checkbox"]:checked + label + .task-text,
+[type="checkbox"]:checked + label + .task-text + .description {
+    opacity: 0.5;
+}
+
+.task-item .task-text .task-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 2px;
+    background-color: currentColor;
+    transform: scale(0);
+    transform-origin: right;
+    transition: transform 200ms ease-in-out;
+}
+
+[type="checkbox"]:checked + label + .task-text .task-title::after {
+    transform: scale(1);
+    transform-origin: left;
+}
+
 .task-text {
     margin-left: .8rem;
+}
+
+.task-title {
+    position: relative;
+    width: fit-content;
 }
 
 .description {
     grid-row: 2;
     grid-column: 1/-1;
+    display: grid;
+    grid-template-rows: 0fr;
+}
+
+.description.show {
+    grid-template-rows: 1fr;
+}
+
+.description > div {
+    overflow: hidden;
 }
 
 .edit-task,
@@ -169,6 +248,7 @@ body {
     border-style: none;
     background: none;
     padding: .1rem .3rem;
+    align-self: center;
 }
 
 .edit-task {
@@ -193,18 +273,18 @@ body {
 }
 
 .edit-task-title,
-.task-title {
+.task-title-input {
     grid-column: 1/-1;
 }
 
 .edit-task-description,
-.task-description {
+.task-description-input {
     grid-row: 2/4;
     grid-column: 1/4;
 }
 
 .edit-task-priority,
-.task-priority {
+.task-priority-input {
     justify-self: end;
 }
 
