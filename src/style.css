@@ -1,3 +1,9 @@
+:root {
+    --clr-primary: hsl(205, 23%, 86%);
+    --clr-secondary: hsl(219, 52%, 17%);
+    --clr-accent: hsl(14, 67%, 46%);
+}
+
 *,
 *::before,
 *::after {
@@ -15,21 +21,36 @@ button {
     cursor: pointer;
 }
 
+.hide > *{
+    display: none;
+}
+
 body {
     display: grid;
     grid-template-columns: minmax(5rem, 20rem) 1fr;
-    min-height: 100svh;
-    border: 2px solid salmon;
+    height: 100svh;
+    padding: 1rem 2rem;
+    color: var(--clr-primary);
+    background-image: linear-gradient(
+                        hsl(201, 20%, 100%),
+                        var(--clr-primary) 40%
+                    );
 }
 
 .sidebar {
     display: grid;
-    grid-auto-rows: min-content;
-    margin: 2rem 1rem;
+    grid-template-rows: min-content min-content 1fr min-content;
+    background-color: var(--clr-secondary);
+    border-radius: 10px 0 0 0;
+}
+
+.sidebar-line {
+    height: 2px;
+    background-color: hsl(204, 15%, 23%);
 }
 
 .projects-container {
-    margin-top: 2rem;
+    position: relative;
 }
 
 .main-projects,
@@ -37,15 +58,17 @@ body {
     display: grid;
     gap: .3rem;
     cursor: context-menu;
+    margin: 1rem .5rem;
 }
+
 .main-projects > div,
 .my-projects > .display-project {
-    padding: .5rem;
+    padding: .5rem .8rem;
 }
 
 .main-projects > div:hover,
 .my-projects > .display-project:hover {
-    background-color: hsl(0, 0%, 98%);
+    background-color: hsl(219, 52%, 23%);
 }
 
 .my-projects > .display-project {
@@ -66,6 +89,7 @@ body {
 
 .edit-project {
     font-size: .8rem;
+    color: var(--clr-accent);
 }
 .edit-project:hover {
     font-weight: 600;
@@ -73,6 +97,7 @@ body {
 
 .delete-project {
     font-size: 1.1rem;
+    color: inherit;
 }
 
 .delete-project:hover {
@@ -86,6 +111,12 @@ body {
     display: flex;
     align-items: center;
     gap: .5rem;
+    background-color: var(--clr-accent);
+}
+
+.new-list-btn:hover,
+.new-task:hover {
+    opacity: .95;
 }
 
 .new-list-btn > span {
@@ -96,6 +127,9 @@ body {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: .3rem;
+    position: absolute;
+    top: 1rem;
+    width: 100%;
 }
 
 .edit-list-form > input {
@@ -114,6 +148,9 @@ body {
     display: grid;
     grid-template-columns: 1fr min-content;
     gap: .3rem;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 
 .new-list-form > input {
@@ -127,34 +164,60 @@ body {
 /*------- Content -------*/
 
 .content {
+    --border-size: 8px;
     display: grid;
-    grid-auto-rows: min-content;
-    margin-top: 2rem;
+    grid-auto-rows: min-content 1fr min-content;
     padding: 2rem 2rem 0;
+    color: var(--clr-secondary);
+    position: relative;
+    border-top: var(--border-size) solid var(--clr-secondary);
+    border-right: var(--border-size) solid var(--clr-secondary);
+    border-radius: 0 10px 0 0;
 }
 
 .content .title {
     font-size: 2rem;
     font-weight: 600;
     margin-bottom: 2rem;
+    padding: 1rem;
+    background-color: var(--clr-secondary);
+    color: var(--clr-accent);
+    border-radius: 15px 0 0 15px;
+    position: relative;
+}
+
+.content .title::after {
+    content: '';
+    height: 100%;
+    width: 2rem;
+    background-color: var(--clr-secondary);
+    position: absolute;
+    right: -2rem;
+    top: 0;
 }
 
 .tasks {
     display: grid;
     gap: .3rem;
+    grid-auto-rows: min-content;
 }
 
 .task-item {
     display: grid;
     grid-template-columns: min-content 1fr repeat(2, min-content);
-    border: 1px solid paleturquoise;
+    background-image: linear-gradient(to right, var(--clr-secondary),
+                                var(--clr-accent), var(--clr-secondary)
+                            );
+    background-size: 300%;
+    color: var(--clr-primary);
     cursor: context-menu;
     position: relative;
     padding: .5rem .8rem;
+    transition: background-position .3s ease-in-out;
 }
 
 .task-item:hover {
-    background-color: hsl(0, 0%, 98%);
+    background-position: right;
 }
 
 [type="checkbox"] {
@@ -180,11 +243,14 @@ body {
 
 .custom-checkbox:hover {
     transform: scale(.9);
-    color: var(--clr-accent-alpha);
+    color: var(--clr-secondary);
 }
 
 [type="checkbox"]:focus + label .custom-checkbox {
     transform: translateX(0.2em);
+    transform: translateX(0.2em);
+    color: var(--clr-accent-alpha, silver); 
+    transform: translateX(0.2em);   
     color: var(--clr-accent-alpha, silver); 
 }
 
@@ -225,6 +291,11 @@ body {
 .task-title {
     position: relative;
     width: fit-content;
+}
+
+[type="checkbox"]:checked + label + .task-text + .description + .edit-task,
+[type="checkbox"]:checked + label + .task-text + .description + .edit-task + .delete-task {
+    display: none;
 }
 
 .description {
@@ -270,6 +341,7 @@ body {
     grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
     max-width: 30rem;
+    position: absolute;
 }
 
 .edit-task-title,
@@ -298,6 +370,14 @@ body {
     grid-column: 3/5;
 }
 
+.edit-task-form {
+    top: 17rem;
+}
+
+.task-form {
+    bottom: 0;
+}
+
 .new-task {
     border-style: none;
     text-align: start;
@@ -306,6 +386,7 @@ body {
     display: flex;
     align-items: center;
     gap: 1rem;
+    background-color: var(--clr-accent);
 }
 
 .new-task > span {

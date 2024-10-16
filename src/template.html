@@ -16,10 +16,11 @@
           All Tasks
         </div>
       </div>
-      <div class="projects-container">
-        <h1>My Projects</h1>
 
-        <form action="" class="edit-list-form">
+      <div class="sidebar-line"></div>
+
+      <div class="projects-container">
+        <form action="" class="edit-list-form hide">
           <input
             type="text"
             id="edit-project-name"
@@ -39,7 +40,7 @@
         <span>+</span> New List
       </button>
 
-      <form action="" class="new-list-form">
+      <form action="" class="new-list-form hide">
         <input type="text" id="new-project-name" autocomplete="off" required />
         <button id="cancel-project" class="cancel-project">×</button>
         <button id="add-project" class="add-project">+</button>
@@ -49,7 +50,7 @@
     <div class="content">
       <h2 id="title" class="title"></h2>
 
-      <form action="" id="edit-task-form" class="edit-task-form">
+      <form action="" id="edit-task-form" class="edit-task-form hide">
         <input
           type="text"
           id="edit-task-title"
@@ -89,7 +90,7 @@
 
       <button id="new-task" class="new-task"><span>+</span> New Task</button>
 
-      <form action="" id="task-form" class="task-form">
+      <form action="" id="task-form" class="task-form hide">
         <input
           type="text"
           id="task-title"
