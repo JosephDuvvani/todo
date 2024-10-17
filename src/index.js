@@ -165,6 +165,11 @@ function displayProjects() {
         item.classList.add('display-project');
         item.setAttribute('data-index', `${projects.indexOf(proj)}`);
 
+        const iconTemplate = document.getElementById('list-icon');
+        const listIcon = iconTemplate.content.cloneNode(true);
+
+        item.appendChild(listIcon);
+
         const name = document.createElement('span');
         name.classList.add('project-name');
         name.setAttribute('data-index', `${projects.indexOf(proj)}`);
