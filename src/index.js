@@ -91,6 +91,18 @@ function checkStorage() {
 
 //Create New List
 const newProjectBtn = document.getElementById('add-project');
+const cancelProjectBtn = document.getElementById('cancel-project');
+const newListBtn = document.getElementById('new-list');
+const addProjectForm = document.getElementById('new-list-form');
+
+newListBtn.addEventListener('click', () => {
+    addProjectForm.classList.toggle('hide', false);
+})
+
+cancelProjectBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    addProjectForm.classList.toggle('hide', true);
+})
 
 newProjectBtn.addEventListener('click', (e) => {
     e.preventDefault();
@@ -127,6 +139,7 @@ function editProject() {
     const editProjectBtn = document.querySelectorAll('.edit-project')
     const newProjectName = document.getElementById('edit-project-name');
     const saveProjectEdit = document.getElementById('save-project-edit');
+    const cancelProjectEdit = document.getElementById('cancel-project-edit');
 
     editProjectBtn.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -134,6 +147,9 @@ function editProject() {
             const proj = collections.getMyProjects()[projectIndex];
             newProjectName.value = proj.getName();
             saveProjectEdit.dataset.edit = projectIndex;
+
+            const editListForm = document.querySelector('.edit-list-form');
+            editListForm.classList.toggle('hide', false);
         })
 
         saveProjectEdit.addEventListener('click', (e) => {
@@ -149,6 +165,12 @@ function editProject() {
             displayProjects();
 
             newProjectName.value = '';
+        })
+
+        cancelProjectEdit.addEventListener('click', (e) => {
+            e.preventDefault();
+            const editListForm = document.querySelector('.edit-list-form');
+            editListForm.classList.toggle('hide', true);
         })
     })
 }
@@ -203,6 +225,18 @@ function displayProjects() {
     const newDate = document.getElementById('task-date');
     const newPriority = document.getElementById('task-priority');
     const addTaskBtn = document.getElementById('add-task');
+    const cancelTaskBtn = document.getElementById('cancel-task');
+    const newTaskBtn = document.getElementById('new-task');
+    const addTaskForm = document.getElementById('task-form');
+
+    newTaskBtn.addEventListener('click', () => {
+        addTaskForm.classList.toggle('hide', false);
+    })
+
+    cancelTaskBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        addTaskForm.classList.toggle('hide', true);
+    })
 
     addTaskBtn.addEventListener('click', (e) => {
         e.preventDefault();
@@ -271,6 +305,7 @@ function editTask() {
     const newDate = document.getElementById('edit-task-date');
     const newPriority = document.getElementById('edit-task-priority');
     const saveBtn = document.getElementById('save-task-edit');
+    const cancelTaskEdit = document.getElementById('cancel-task-edit');
 
     editBtn.forEach(btn => {
         let proj;
@@ -285,6 +320,8 @@ function editTask() {
         }
 
         btn.addEventListener('click', () => {
+            const editTaskForm = document.querySelector('.edit-task-form')
+            editTaskForm.classList.toggle('hide', false);
             const taskIndex = btn.dataset.edit;
 
             const task = proj.getTasks()[taskIndex];
@@ -296,6 +333,7 @@ function editTask() {
 
             saveBtn.dataset.edit = taskIndex;
         })
+
         saveBtn.addEventListener('click', (e) => {
             e.preventDefault();
             if(newTitle.value === '') return;
@@ -325,6 +363,12 @@ function editTask() {
             newDescription.value = '';
             newDate.value = '';
             newPriority.value = '';
+        })
+
+        cancelTaskEdit.addEventListener('click', (e) => {
+            e.preventDefault();
+            const editTaskForm = document.getElementById('edit-task-form');
+            editTaskForm.classList.toggle('hide', true);
         })
     })
 }
@@ -371,7 +415,7 @@ function displayTasks(selected) {
 
     taskList.forEach(task => {
         const item = document.createElement('li');
-        item.classList.add('task-item');
+        item.classList.add('task-item', `priority-${task.getPriority()}`);
         item.setAttribute('data-index', `${taskList.indexOf(task)}`);
 
         const checkbox = document.createElement('input');
