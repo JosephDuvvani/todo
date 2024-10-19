@@ -116,6 +116,7 @@ newProjectBtn.addEventListener('click', (e) => {
     populateStorage();
     
     displayProjects();
+    addProjectForm.classList.toggle('hide', true);
 })
 
 //Delete Project
@@ -140,6 +141,7 @@ function editProject() {
     const newProjectName = document.getElementById('edit-project-name');
     const saveProjectEdit = document.getElementById('save-project-edit');
     const cancelProjectEdit = document.getElementById('cancel-project-edit');
+    const editListForm = document.querySelector('.edit-list-form');
 
     editProjectBtn.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -156,20 +158,17 @@ function editProject() {
             e.preventDefault()
             if(newProjectName.value === '') return;
             const proj = collections.getMyProjects()[e.target.dataset.edit];
-            console.log(e.target.dataset.edit)
-            console.log(proj.getName())
             proj.setName(newProjectName.value);
-            console.log(proj.getName())
 
             populateStorage();
             displayProjects();
 
             newProjectName.value = '';
+            editListForm.classList.toggle('hide', true);
         })
 
         cancelProjectEdit.addEventListener('click', (e) => {
             e.preventDefault();
-            const editListForm = document.querySelector('.edit-list-form');
             editListForm.classList.toggle('hide', true);
         })
     })
@@ -245,7 +244,10 @@ function displayProjects() {
         newTask.setTitle(newTitle.value.trim());
         newTask.setDescription(newDescription.value.trim());
         newTask.setDueDate(newDate.value);
-        newTask.setPriority(newPriority.value);
+
+        (newPriority.value === '') ?
+            newTask.setPriority('low') :
+            newTask.setPriority(newPriority.value);
 
         const active = currentList.dataset.current;
 
@@ -266,6 +268,7 @@ function displayProjects() {
         newDescription.value = '';
         newDate.value = '';
         newPriority.value = '';
+        addTaskForm.classList.toggle('hide', true);
     })
 })();
 
@@ -306,6 +309,7 @@ function editTask() {
     const newPriority = document.getElementById('edit-task-priority');
     const saveBtn = document.getElementById('save-task-edit');
     const cancelTaskEdit = document.getElementById('cancel-task-edit');
+    const editTaskForm = document.querySelector('.edit-task-form');
 
     editBtn.forEach(btn => {
         let proj;
@@ -320,7 +324,6 @@ function editTask() {
         }
 
         btn.addEventListener('click', (e) => {
-            const editTaskForm = document.querySelector('.edit-task-form')
             editTaskForm.classList.toggle('hide', false);
             const taskIndex = btn.dataset.edit;
 
@@ -364,6 +367,7 @@ function editTask() {
             newDescription.value = '';
             newDate.value = '';
             newPriority.value = '';
+            editTaskForm.classList.toggle('hide', true);
         })
 
         cancelTaskEdit.addEventListener('click', (e) => {
