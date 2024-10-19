@@ -184,7 +184,7 @@ function displayProjects() {
 
     projects.forEach(proj => {
         const item = document.createElement('li');
-        item.classList.add('display-project');
+        item.classList.add('display-project', 'item');
         item.setAttribute('data-index', `${projects.indexOf(proj)}`);
 
         const iconTemplate = document.getElementById('list-icon');
@@ -200,13 +200,13 @@ function displayProjects() {
 
         const editBtn = document.createElement('button');
         editBtn.setAttribute('data-edit', `${projects.indexOf(proj)}`);
-        editBtn.classList.add('edit-project');
+        editBtn.classList.add('edit-project', 'edit');
         editBtn.textContent = 'Edit';
         item.appendChild(editBtn);
 
         const deleteBtn = document.createElement('button');
         deleteBtn.setAttribute('data-remove', `${projects.indexOf(proj)}`);
-        deleteBtn.classList.add('delete-project');
+        deleteBtn.classList.add('delete-project', 'delete');
         deleteBtn.textContent = '×';
         item.appendChild(deleteBtn);
 
@@ -319,7 +319,7 @@ function editTask() {
             proj = collections.getMyProjects()[currentList];
         }
 
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', (e) => {
             const editTaskForm = document.querySelector('.edit-task-form')
             editTaskForm.classList.toggle('hide', false);
             const taskIndex = btn.dataset.edit;
@@ -332,6 +332,7 @@ function editTask() {
             newPriority.value = task.getPriority();
 
             saveBtn.dataset.edit = taskIndex;
+            e.stopPropagation();
         })
 
         saveBtn.addEventListener('click', (e) => {
@@ -415,7 +416,7 @@ function displayTasks(selected) {
 
     taskList.forEach(task => {
         const item = document.createElement('li');
-        item.classList.add('task-item', `priority-${task.getPriority()}`);
+        item.classList.add('task-item', 'item', `priority-${task.getPriority()}`);
         item.setAttribute('data-index', `${taskList.indexOf(task)}`);
 
         const checkbox = document.createElement('input');
@@ -457,13 +458,13 @@ function displayTasks(selected) {
 
         const editBtn = document.createElement('button');
         editBtn.setAttribute('data-edit', `${taskList.indexOf(task)}`);
-        editBtn.classList.add('edit-task');
+        editBtn.classList.add('edit-task', 'edit');
         editBtn.textContent = 'Edit';
         item.appendChild(editBtn);
 
         const deleteBtn = document.createElement('button');
         deleteBtn.setAttribute('data-removetask', `${taskList.indexOf(task)}`);
-        deleteBtn.classList.add('delete-task');
+        deleteBtn.classList.add('delete-task', 'delete');
         deleteBtn.textContent = '×';
         item.appendChild(deleteBtn);
 

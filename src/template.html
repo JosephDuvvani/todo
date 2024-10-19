@@ -126,6 +126,7 @@
           name="edit_priority"
           id="edit-task-priority"
           class="edit-task-priority"
+          required
         >
           <option value="" disabled selected hidden>Priority</option>
           <option value="low">Low</option>
@@ -169,7 +170,12 @@
 
         <input type="date" id="task-date" class="task-date-input" />
 
-        <select name="priority" id="task-priority" class="task-priority-input">
+        <select
+          name="priority"
+          id="task-priority"
+          class="task-priority-input"
+          required
+        >
           <option value="" disabled selected hidden>Priority</option>
           <option value="low">Low</option>
           <option value="medium">Medium</option>

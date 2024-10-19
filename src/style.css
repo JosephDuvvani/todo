@@ -164,14 +164,13 @@ body {
     gap: .3rem;
     position: absolute;
     background-color: var(--bg-clr-form);
-    border-radius: 5px;
+    border-radius: 5px 8px 5px 5px;
 }
 
 .sidebar .form {
     left: var(--margin);
     right: var(--margin);
     top: 1rem;
-
 }
 
 .form h1 {
@@ -348,14 +347,16 @@ select:focus {
 .task-item {
     display: grid;
     grid-template-columns: min-content 1fr repeat(2, min-content);
-    background-image: linear-gradient(to right, var(--clr-secondary),
-                                var(--priority), var(--clr-secondary)
+    background-image: linear-gradient(to right, var(--clr-secondary) 15%,
+                                var(--priority),
+                                var(--clr-secondary) 85%
                             );
     background-size: 300%;
     color: var(--clr-primary);
     cursor: context-menu;
     position: relative;
     padding: .5rem .8rem;
+    margin-inline: .5rem;
     transition: background-position .3s ease-in-out;
 }
 
@@ -372,6 +373,7 @@ select:focus {
 
 .task-item label {
     align-self: center;
+    display: flex;
 }
 
 .custom-checkbox {
@@ -429,11 +431,17 @@ select:focus {
 
 .task-text {
     margin-left: .8rem;
+    display: grid;
+    align-content: center;
 }
 
 .task-title {
     position: relative;
     width: fit-content;
+}
+
+.due-date {
+    font-size: .9rem;
 }
 
 [type="checkbox"]:checked + label + .task-text + .description + .edit-task,
@@ -446,10 +454,14 @@ select:focus {
     grid-column: 1/-1;
     display: grid;
     grid-template-rows: 0fr;
+    text-shadow: 2px 2px 4px var(--clr-secondary);
 }
 
 .description.show {
     grid-template-rows: 1fr;
+    padding-top: .5rem;
+    margin-top: .5rem;
+    border-top: 1px solid var(--clr-primary);
 }
 
 .description > div {
@@ -461,7 +473,6 @@ select:focus {
     align-self: start;
     border-style: none;
     background: none;
-    padding: .1rem .3rem;
     align-self: center;
 }
 
@@ -484,12 +495,27 @@ select:focus {
     color: var(--clr-cancel);
 }
 
+.edit,
+.delete {
+    width: 0;
+    padding-inline: 0;
+    overflow: hidden;
+    transition: padding .5s;
+}
+
+.item:hover .edit,
+.item:hover .delete {
+    padding: .1rem .3rem;
+    width: auto;
+}
+
 .content .form {
     grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
     max-width: 30rem;
     right: .2rem;
     align-self: center;
+    z-index: 1;
 }
 
 .edit-task-description,
