@@ -26,10 +26,6 @@ button {
     cursor: pointer;
 }
 
-.hide > *{
-    /* display: none; */
-}
-
 body {
     display: grid;
     grid-template-columns: minmax(5rem, 20rem) 1fr;
@@ -54,13 +50,15 @@ body {
 
 .sidebar {
     display: grid;
-    grid-template-rows: min-content 1fr min-content;
+    grid-template-rows: min-content 1fr;
     grid-row: 2;
     grid-column: 1;
     position: relative;
 }
 
 .projects-container {
+    display: grid;
+    grid-template-rows: 1fr min-content;
     position: relative;
     background-color: var(--clr-secondary);
     border-radius: 15px 15px 0 0;
@@ -88,6 +86,10 @@ body {
 .main-projects > div:hover,
 .my-projects > .display-project:hover {
     background-color: hsl(219, 52%, 23%);
+}
+
+.my-projects {
+    align-self: start;
 }
 
 .my-projects > .display-project {
@@ -168,15 +170,14 @@ body {
 .sidebar .form {
     left: var(--margin);
     right: var(--margin);
-}
-
-.edit-list-form {
     top: 1rem;
+
 }
 
 .form h1 {
     font-weight: 700;
     padding: 1rem .5rem .5rem;
+    color: var(--clr-primary);
 }
 
 .form input[type="text"] {
@@ -289,10 +290,6 @@ select:focus {
     box-shadow: 0 4px 6px -3px black;
 }
 
-.new-list-form {
-    bottom: 0;
-}
-
 /*------- Content -------*/
 
 .content {
@@ -333,6 +330,19 @@ select:focus {
     display: grid;
     gap: .3rem;
     grid-auto-rows: min-content;
+}
+
+.priority-urgent {
+    --priority: hsl(15, 92%, 49%, 0.7);
+}
+.priority-high {
+    --priority: hsl(281, 73%, 81%, 0.7);
+}
+.priority-medium {
+    --priority: hsl(91, 73%, 81%, 0.7);
+}
+.priority-low {
+    --priority: hsl(185, 65%, 60%, 0.7);
 }
 
 .task-item {
@@ -457,10 +467,16 @@ select:focus {
 
 .edit-task {
     margin-right: .3rem;
+    color: var(--priority);
 }
 
 .edit-task:hover {
     font-weight: 600;
+}
+
+.delete-task {
+    font-size: 1.2rem;
+    color: var(--clr-primary);
 }
 
 .delete-task:hover {
@@ -469,7 +485,6 @@ select:focus {
 }
 
 .content .form {
-    display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
     max-width: 30rem;
@@ -513,17 +528,8 @@ select {
     background-color: var(--clr-primary);
 }
 
-.priority-urgent {
-    --priority: hsl(15, 92%, 49%, 0.7);
-}
-.priority-high {
-    --priority: hsl(281, 73%, 81%, 0.7);
-}
-.priority-medium {
-    --priority: hsl(91, 73%, 81%, 0.7);
-}
-.priority-low {
-    --priority: hsl(185, 65%, 60%, 0.7);
+.content .form div {
+    border: 2px solid var(--bg-clr-form);
 }
 
 .new-task {
@@ -539,4 +545,8 @@ select {
 
 .new-task > span {
     font-size: 1.5rem;
+}
+
+.hide {
+    display: none;
 }
