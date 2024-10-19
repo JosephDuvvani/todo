@@ -91,6 +91,17 @@ function checkStorage() {
 
 const isWhitespaceString = str => !str.replace(/\s/g, '').length;
 
+function getValidName(name) {
+    const myProjects = collections.getMyProjects();
+    const myNames = myProjects.map(proj => proj.getName());
+    if(!myNames.includes(name)) return name;
+
+    for(let i = 1; i <= myProjects.length; i++) {
+        let validName = `${name} (${i})`;
+        if(!myNames.includes(validName)) return validName;
+    }
+}
+
 //Create New List
 const newProjectBtn = document.getElementById('add-project');
 const cancelProjectBtn = document.getElementById('cancel-project');
@@ -118,12 +129,13 @@ newProjectBtn.addEventListener('click', (e) => {
         return;
     }
     const newProject = Project();
-    newProject.setName(nameInput.value.trim());
+    newProject.setName(getValidName(nameInput.value.trim()));
     collections.addProject(newProject);
 
     populateStorage();
     
     displayProjects();
+    nameInput.value = '';
     addProjectForm.classList.toggle('hide', true);
 })
 
@@ -172,7 +184,7 @@ function editProject() {
                 return;
             }
             const proj = collections.getMyProjects()[e.target.dataset.edit];
-            proj.setName(newProjectName.value);
+            proj.setName(getValidName(newProjectName.value.trim()));
 
             populateStorage();
             displayProjects();
