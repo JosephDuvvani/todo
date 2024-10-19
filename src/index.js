@@ -140,6 +140,7 @@ newProjectBtn.addEventListener('click', (e) => {
 })
 
 //Delete Project
+let currentProject = document.getElementById('tasks').dataset.current;
 function deleteProjectEventListener() {
     const deleteProjectBtns = document.querySelectorAll('.delete-project');
 
@@ -151,6 +152,10 @@ function deleteProjectEventListener() {
     
             populateStorage();
             displayProjects();
+            if(index == currentProject) {
+                displayTasks('my-day');
+                document.getElementById('tasks').dataset.current = 'my-day';              
+            }
         })
     })
 }
@@ -241,8 +246,8 @@ function displayProjects() {
         destination.appendChild(item);
     })
     editProject();
-    deleteProjectEventListener();
     projectOnClick();
+    deleteProjectEventListener();
 }
 
 //Add Task
@@ -547,6 +552,7 @@ function projectOnClick() {
             if(!targ.dataset.index) return;
             const activeProject = targ.dataset.index;
             activeList.dataset.current = activeProject;
+            currentProject = activeProject;
             
             displayTasks(activeProject);
         })
