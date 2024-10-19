@@ -189,6 +189,9 @@ function editProject() {
             populateStorage();
             displayProjects();
 
+            const currentList = document.getElementById('tasks').dataset.current;
+            displayTasks(currentList);
+
             newProjectName.value = '';
             editListForm.classList.toggle('hide', true);
         })
