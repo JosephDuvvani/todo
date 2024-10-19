@@ -89,6 +89,8 @@ function checkStorage() {
     })
 }
 
+const isWhitespaceString = str => !str.replace(/\s/g, '').length;
+
 //Create New List
 const newProjectBtn = document.getElementById('add-project');
 const cancelProjectBtn = document.getElementById('cancel-project');
@@ -108,7 +110,13 @@ newProjectBtn.addEventListener('click', (e) => {
     e.preventDefault();
     const nameInput = document.getElementById('new-project-name');
 
-    if(nameInput.value === '') return;
+    if(nameInput.value === '' ||
+        isWhitespaceString(nameInput.value)
+    ) {
+        nameInput.focus();
+        nameInput.value = '';
+        return;
+    }
     const newProject = Project();
     newProject.setName(nameInput.value.trim());
     collections.addProject(newProject);
@@ -156,7 +164,13 @@ function editProject() {
 
         saveProjectEdit.addEventListener('click', (e) => {
             e.preventDefault()
-            if(newProjectName.value === '') return;
+            if(newProjectName.value === '' ||
+                isWhitespaceString(newProjectName.value)
+            ) {
+                newProjectName.focus();
+                newProjectName.value = '';
+                return;
+            }
             const proj = collections.getMyProjects()[e.target.dataset.edit];
             proj.setName(newProjectName.value);
 
@@ -240,7 +254,13 @@ function displayProjects() {
     addTaskBtn.addEventListener('click', (e) => {
         e.preventDefault();
         const newTask = Task();
-        if(newTitle.value === '') return;
+        if(newTitle.value === '' ||
+            isWhitespaceString(newTitle.value)
+        ) {
+            newTitle.focus();
+            newTitle.value = '';
+            return;
+        }
         newTask.setTitle(newTitle.value.trim());
         newTask.setDescription(newDescription.value.trim());
         newTask.setDueDate(newDate.value);
@@ -340,7 +360,13 @@ function editTask() {
 
         saveBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            if(newTitle.value === '') return;
+            if(newTitle.value === '' ||
+                isWhitespaceString(newTitle.value)
+            ) {
+                newTitle.focus();
+                newTitle.value = '';
+                return;
+            }
             const currentList = document.getElementById('tasks').dataset.current;
 
             if(currentList === 'my-day') {
@@ -355,8 +381,8 @@ function editTask() {
 
             const task = proj.getTasks()[e.target.dataset.edit];
 
-            task.setTitle(newTitle.value);
-            task.setDescription(newDescription.value);
+            task.setTitle(newTitle.value.trim());
+            task.setDescription(newDescription.value.trim());
             task.setDueDate(newDate.value);
             task.setPriority(newPriority.value);
 
