@@ -189,7 +189,13 @@ function editProject() {
                 return;
             }
             const proj = collections.getMyProjects()[e.target.dataset.edit];
-            proj.setName(getValidName(newProjectName.value.trim()));
+            if(newProjectName.value.trim() !== proj.getName()) {
+                proj.setName(getValidName(newProjectName.value.trim()));
+            } else {
+                newProjectName.value = '';
+                hideChildWithParent(editListForm, true);
+                return;
+            }
 
             populateStorage();
             displayProjects();
@@ -444,7 +450,7 @@ function toggleDescription() {
 function displayTasks(selected) {
     hideChildWithParent(document.getElementById('task-form'), true);
     hideChildWithParent(document.getElementById('edit-task-form'), true);
-    
+
     let proj;
     if(selected === 'my-day') {
         proj = collections.getMyDay();       
