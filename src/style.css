@@ -26,6 +26,10 @@ button {
     cursor: pointer;
 }
 
+dialog {
+    z-index: 9;
+}
+
 body {
     display: grid;
     grid-template-columns: minmax(5rem, 20rem) 1fr;
@@ -156,6 +160,13 @@ body {
     font-size: 1.5rem;
 }
 
+.form-container {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    z-index: 1;
+}
+
 .form {
     --margin: .5rem;
     display: grid;
@@ -165,6 +176,7 @@ body {
     position: absolute;
     background-color: var(--bg-clr-form);
     border-radius: 5px 8px 5px 5px;
+    z-index: 10;
 }
 
 .sidebar .form {
@@ -515,7 +527,7 @@ select:focus {
     max-width: 30rem;
     right: .2rem;
     align-self: center;
-    z-index: 1;
+    z-index: 2;
 }
 
 .edit-task-description,

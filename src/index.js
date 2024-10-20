@@ -108,13 +108,13 @@ const cancelProjectBtn = document.getElementById('cancel-project');
 const newListBtn = document.getElementById('new-list');
 const addProjectForm = document.getElementById('new-list-form');
 
-newListBtn.addEventListener('click', () => {
-    addProjectForm.classList.toggle('hide', false);
+newListBtn.addEventListener('click', (e) => {
+    hideChildWithParent(addProjectForm, false);
 })
 
 cancelProjectBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    addProjectForm.classList.toggle('hide', true);
+    hideChildWithParent(addProjectForm, true);
 })
 
 newProjectBtn.addEventListener('click', (e) => {
@@ -136,7 +136,7 @@ newProjectBtn.addEventListener('click', (e) => {
     
     displayProjects();
     nameInput.value = '';
-    addProjectForm.classList.toggle('hide', true);
+    hideChildWithParent(addProjectForm, true);
 })
 
 //Delete Project
@@ -153,8 +153,8 @@ function deleteProjectEventListener() {
             populateStorage();
             displayProjects();
             if(index == currentProject) {
-                displayTasks('my-day');
-                document.getElementById('tasks').dataset.current = 'my-day';              
+                document.getElementById('tasks').dataset.current = 'my-day';
+                displayTasks('my-day');            
             }
         })
     })
@@ -176,7 +176,7 @@ function editProject() {
             saveProjectEdit.dataset.edit = projectIndex;
 
             const editListForm = document.querySelector('.edit-list-form');
-            editListForm.classList.toggle('hide', false);
+            hideChildWithParent(editListForm, false);
         })
 
         saveProjectEdit.addEventListener('click', (e) => {
@@ -198,12 +198,12 @@ function editProject() {
             displayTasks(currentList);
 
             newProjectName.value = '';
-            editListForm.classList.toggle('hide', true);
+            hideChildWithParent(editListForm, true);
         })
 
         cancelProjectEdit.addEventListener('click', (e) => {
             e.preventDefault();
-            editListForm.classList.toggle('hide', true);
+            hideChildWithParent(editListForm, true);
         })
     })
 }
@@ -263,12 +263,12 @@ function displayProjects() {
     const addTaskForm = document.getElementById('task-form');
 
     newTaskBtn.addEventListener('click', () => {
-        addTaskForm.classList.toggle('hide', false);
+        hideChildWithParent(addTaskForm, false);
     })
 
     cancelTaskBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        addTaskForm.classList.toggle('hide', true);
+        hideChildWithParent(addTaskForm, true);
     })
 
     addTaskBtn.addEventListener('click', (e) => {
@@ -308,7 +308,7 @@ function displayProjects() {
         newDescription.value = '';
         newDate.value = '';
         newPriority.value = '';
-        addTaskForm.classList.toggle('hide', true);
+        hideChildWithParent(addTaskForm, true);
     })
 })();
 
@@ -364,7 +364,7 @@ function editTask() {
         }
 
         btn.addEventListener('click', (e) => {
-            editTaskForm.classList.toggle('hide', false);
+            hideChildWithParent(editTaskForm, false);
             const taskIndex = btn.dataset.edit;
 
             const task = proj.getTasks()[taskIndex];
@@ -413,13 +413,13 @@ function editTask() {
             newDescription.value = '';
             newDate.value = '';
             newPriority.value = '';
-            editTaskForm.classList.toggle('hide', true);
+            hideChildWithParent(editTaskForm, true);
         })
 
         cancelTaskEdit.addEventListener('click', (e) => {
             e.preventDefault();
             const editTaskForm = document.getElementById('edit-task-form');
-            editTaskForm.classList.toggle('hide', true);
+            hideChildWithParent(editTaskForm, true);
         })
     })
 }
@@ -442,6 +442,9 @@ function toggleDescription() {
 
 //Display Tasks
 function displayTasks(selected) {
+    hideChildWithParent(document.getElementById('task-form'), true);
+    hideChildWithParent(document.getElementById('edit-task-form'), true);
+    
     let proj;
     if(selected === 'my-day') {
         proj = collections.getMyDay();       
@@ -557,4 +560,26 @@ function projectOnClick() {
             displayTasks(activeProject);
         })
     })
+}
+
+(function overlayOnClick() {
+    const forms = document.querySelectorAll('.form');
+    const overlay = document.querySelectorAll('.form-container');
+
+    forms.forEach(form => {
+        form.addEventListener('click', (e) => {
+            e.stopPropagation();
+        })
+    })
+
+    overlay.forEach(layer => {
+        layer.addEventListener('click', (e) => {
+            hideChildWithParent(layer.children[0], true);
+        })
+    })
+})();
+
+function hideChildWithParent(element, state) {
+    element.classList.toggle('hide', state);
+    element.parentElement.classList.toggle('hide', state);
 }

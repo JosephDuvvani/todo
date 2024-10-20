@@ -49,139 +49,156 @@
       </div>
 
       <div class="projects-container">
-        <form action="" id="edit-list-form" class="form edit-list-form hide">
-          <h1>Change Name</h1>
-          <input
-            type="text"
-            id="edit-project-name"
-            placeholder="Enter new name"
-            autocomplete="off"
-            required
-          />
-          <button
-            id="cancel-project-edit"
-            class="cancel-project-edit cancel-btn"
-          >
-            ×
-          </button>
-          <div>
-            <button id="save-project-edit" class="save-project-edit action-btn">
-              Save
+        <div class="form-container hide">
+          <form action="" id="edit-list-form" class="form edit-list-form">
+            <h1>Change Name</h1>
+            <input
+              type="text"
+              id="edit-project-name"
+              placeholder="Enter new name"
+              autocomplete="off"
+              required
+            />
+            <button
+              id="cancel-project-edit"
+              class="cancel-project-edit cancel-btn"
+            >
+              ×
             </button>
-          </div>
-        </form>
+            <div>
+              <button
+                id="save-project-edit"
+                class="save-project-edit action-btn"
+              >
+                Save
+              </button>
+            </div>
+          </form>
+        </div>
 
         <ul id="my-projects" class="my-projects"></ul>
 
-        <button id="new-list" class="new-list-btn">
+        <button id="new-list" class="new-list-btn new">
           <span>+</span> New List
         </button>
 
-        <form action="" id="new-list-form" class="form new-list-form hide">
-          <h1>New List</h1>
-          <input
-            type="text"
-            id="new-project-name"
-            placeholder="Enter list name"
-            autocomplete="off"
-            required
-          />
-          <button id="cancel-project" class="cancel-project cancel-btn">
-            ×
-          </button>
-          <div>
-            <button id="add-project" class="add-project action-btn">
-              Create
+        <div class="form-container hide">
+          <form action="" id="new-list-form" class="form new-list-form">
+            <h1>New List</h1>
+            <input
+              type="text"
+              id="new-project-name"
+              placeholder="Enter list name"
+              autocomplete="off"
+              required
+            />
+            <button id="cancel-project" class="cancel-project cancel-btn">
+              ×
             </button>
-          </div>
-        </form>
+            <div>
+              <button id="add-project" class="add-project action-btn">
+                Create
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
 
     <div class="content">
       <h2 id="title" class="title"></h2>
 
-      <form action="" id="edit-task-form" class="form edit-task-form hide">
-        <h1>Edit Task</h1>
-        <input
-          type="text"
-          id="edit-task-title"
-          class="edit-task-title"
-          placeholder="Title"
-          autocomplete="off"
-          required
-        />
+      <div class="form-container hide">
+        <form action="" id="edit-task-form" class="form edit-task-form hide">
+          <h1>Edit Task</h1>
+          <input
+            type="text"
+            id="edit-task-title"
+            class="edit-task-title"
+            placeholder="Title"
+            autocomplete="off"
+            required
+          />
 
-        <textarea
-          type="text"
-          id="edit-task-description"
-          class="edit-task-description"
-          placeholder="Description (optional)"
-          autocomplete="off"
-        ></textarea>
+          <textarea
+            type="text"
+            id="edit-task-description"
+            class="edit-task-description"
+            placeholder="Description (optional)"
+            autocomplete="off"
+          ></textarea>
 
-        <input type="date" id="edit-task-date" class="edit-task-date" />
+          <input type="date" id="edit-task-date" class="edit-task-date" />
 
-        <select
-          name="edit_priority"
-          id="edit-task-priority"
-          class="edit-task-priority"
-        >
-          <option value="" disabled selected hidden>Priority</option>
-          <option value="low">Low</option>
-          <option value="medium">Medium</option>
-          <option value="high">High</option>
-          <option value="urgent">Urgent</option>
-        </select>
+          <select
+            name="edit_priority"
+            id="edit-task-priority"
+            class="edit-task-priority"
+          >
+            <option value="" disabled selected hidden>Priority</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+            <option value="urgent">Urgent</option>
+          </select>
 
-        <button id="cancel-task-edit" class="cancel-task-edit cancel-btn">
-          ×
-        </button>
-        <div>
-          <button id="save-task-edit" class="save-task-edit action-btn">
-            Save
+          <button id="cancel-task-edit" class="cancel-task-edit cancel-btn">
+            ×
           </button>
-        </div>
-      </form>
+          <div>
+            <button id="save-task-edit" class="save-task-edit action-btn">
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
 
       <ul id="tasks" class="tasks" data-current="my-day"></ul>
 
-      <button id="new-task" class="new-task"><span>+</span> New Task</button>
+      <button id="new-task" class="new-task new">
+        <span>+</span> New Task
+      </button>
 
-      <form action="" id="task-form" class="form task-form hide">
-        <h1>New Task</h1>
-        <input
-          type="text"
-          id="task-title"
-          class="task-title-input"
-          placeholder="Title"
-          autocomplete="off"
-          required
-        />
+      <div class="form-container hide">
+        <form action="" id="task-form" class="form task-form">
+          <h1>New Task</h1>
+          <input
+            type="text"
+            id="task-title"
+            class="task-title-input"
+            placeholder="Title"
+            autocomplete="off"
+            required
+          />
 
-        <textarea
-          type="text"
-          id="task-description"
-          class="task-description-input"
-          placeholder="Description (optional)"
-          autocomplete="off"
-        ></textarea>
+          <textarea
+            type="text"
+            id="task-description"
+            class="task-description-input"
+            placeholder="Description (optional)"
+            autocomplete="off"
+          ></textarea>
 
-        <input type="date" id="task-date" class="task-date-input" />
+          <input type="date" id="task-date" class="task-date-input" />
 
-        <select name="priority" id="task-priority" class="task-priority-input">
-          <option value="" disabled selected hidden>Priority</option>
-          <option value="low">Low</option>
-          <option value="medium">Medium</option>
-          <option value="high">High</option>
-          <option value="urgent">Urgent</option>
-        </select>
+          <select
+            name="priority"
+            id="task-priority"
+            class="task-priority-input"
+          >
+            <option value="" disabled selected hidden>Priority</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+            <option value="urgent">Urgent</option>
+          </select>
 
-        <button id="cancel-task" class="cancel-task cancel-btn">×</button>
-        <div>
-          <button id="add-task" class="add-task action-btn">Add</button>
-        </div>
-      </form>
+          <button id="cancel-task" class="cancel-task cancel-btn">×</button>
+          <div>
+            <button id="add-task" class="add-task action-btn">Add</button>
+          </div>
+        </form>
+      </div>
     </div>
 
     <template id="sun-icon">
