@@ -12,11 +12,14 @@ export default function Project() {
 
     const removeTask = (index) => tasks.splice(index, 1);
 
+    const clearAllTasks = () => tasks = [];
+
     return {
         getName,
         getTasks,
         setName,
         addTask,
-        removeTask
+        removeTask,
+        clearAllTasks
     };
 }

@@ -8,7 +8,7 @@ export default function Collections() {
     important.setName('Important');
 
     const allTasks = Project();
-    allTasks.setName('All Tasks');
+    allTasks.setName('Tasks');
 
     const myProjects = [];
 

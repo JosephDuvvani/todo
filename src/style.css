@@ -444,16 +444,26 @@ select:focus {
 .task-text {
     margin-left: .8rem;
     display: grid;
+    grid-template-columns: max-content 1fr;
     align-content: center;
+    gap: 0 .3rem;
 }
 
 .task-title {
     position: relative;
     width: fit-content;
+    grid-column: 1/-1;
+    grid-row: 1;
+}
+
+.task-project {
+    grid-column: 2;
+    font-size: .9rem;
 }
 
 .due-date {
-    font-size: .9rem;
+    grid-row: 2;
+    font-size: .8rem;
 }
 
 [type="checkbox"]:checked + label + .task-text + .description + .edit-task,
@@ -461,22 +471,51 @@ select:focus {
     display: none;
 }
 
-.description {
+.important-btn,
+.my-day-btn {
+    background: none;
+    border: none;
+}
+
+.important-btn svg,
+.my-day-btn svg {
+    width: 1.3rem;
+    fill: var(--clr-primary);
+    pointer-events: none;
+}
+
+.task-hidden {
     grid-row: 2;
     grid-column: 1/-1;
     display: grid;
+    grid-template-columns: 1fr repeat(2, min-content);
+    gap: 1rem;
     grid-template-rows: 0fr;
     text-shadow: 2px 2px 4px var(--clr-secondary);
 }
 
-.description.show {
+.task-hidden button {
+    height: 0;
+    overflow: hidden;
+    align-self: start;
+}
+
+.task-hidden.show {
     grid-template-rows: 1fr;
     padding-top: .5rem;
     margin-top: .5rem;
     border-top: 1px solid var(--clr-primary);
 }
 
-.description > div {
+.task-hidden.show button {
+    height: auto;
+}
+
+.task-hidden button:hover svg{
+    fill: var(--clr-accent);
+}
+
+.task-hidden > div {
     overflow: hidden;
 }
 
