@@ -862,3 +862,16 @@ function hideChildWithParent(element, state) {
     element.classList.toggle('hide', state);
     element.parentElement.classList.toggle('hide', state);
 }
+
+//Prevent unstyled content flash
+
+let domReady = (cb) => {
+    document.readyState === 'interactive' || document.readyState === 'complete'
+      ? cb()
+      : document.addEventListener('DOMContentLoaded', cb);
+  };
+  
+  domReady(() => {
+    // Display body when DOM is loaded
+    document.body.style.visibility = 'visible';
+  });
