@@ -484,6 +484,11 @@ select:focus {
     pointer-events: none;
 }
 
+.important-btn.active-btn svg,
+.my-day-btn.active-btn svg {
+    fill: var(--clr-accent);
+}
+
 .task-hidden {
     grid-row: 2;
     grid-column: 1/-1;

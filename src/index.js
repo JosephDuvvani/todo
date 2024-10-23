@@ -542,30 +542,49 @@ function markAsImportant() {
     important.forEach(btn => {
         const index = btn.dataset.index;
         const indexes = btn.dataset.indexes.split(' ');
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
             if(currentList === 'all-tasks') {             
-                collections.getAllTasks().getTasks()[index].getIsImportant() === false ?
-                    collections.getAllTasks().getTasks()[index].setIsImportant(true) :                 
+                if(collections.getAllTasks().getTasks()[index].getIsImportant() === false) {
+                    collections.getAllTasks().getTasks()[index].setIsImportant(true);
+                    btn.classList.toggle('active-btn', true);
+                } else {
                     collections.getAllTasks().getTasks()[index].setIsImportant(false);
+                    btn.classList.toggle('active-btn', false);
+                }
             } else if(Number.isInteger(+currentList)) {
-                collections.getMyProjects()[+currentList].getTasks()[index].getIsImportant() === false ?
-                    collections.getMyProjects()[+currentList].getTasks()[index].setIsImportant(true) :
+                if(collections.getMyProjects()[+currentList].getTasks()[index].getIsImportant() === false) {
+                    collections.getMyProjects()[+currentList].getTasks()[index].setIsImportant(true);
+                    btn.classList.toggle('active-btn', true);
+                } else {
                     collections.getMyProjects()[+currentList].getTasks()[index].setIsImportant(false);
+                    btn.classList.toggle('active-btn', false);
+                }
             } else if(currentList === 'my-day') {
                 if(indexes[0] === 'all-tasks') {
-                    collections.getAllTasks().getTasks()[indexes[1]].getIsImportant() === false ?
-                        collections.getAllTasks().getTasks()[indexes[1]].setIsImportant(true) :
+                    if(collections.getAllTasks().getTasks()[indexes[1]].getIsImportant() === false) {
+                        collections.getAllTasks().getTasks()[indexes[1]].setIsImportant(true);
+                        btn.classList.toggle('active-btn', true);
+                    } else {
                         collections.getAllTasks().getTasks()[indexes[1]].setIsImportant(false);
+                        btn.classList.toggle('active-btn', false);
+                    }
                 } else {
-                    collections.getMyProjects()[indexes[0]].getTasks()[indexes[1]].getIsImportant() === false ?
-                        collections.getMyProjects()[indexes[0]].getTasks()[indexes[1]].setIsImportant(true) :
+                    if(collections.getMyProjects()[indexes[0]].getTasks()[indexes[1]].getIsImportant() === false) {
+                        collections.getMyProjects()[indexes[0]].getTasks()[indexes[1]].setIsImportant(true);
+                        btn.classList.toggle('active-btn', true);
+                    }else {
                         collections.getMyProjects()[indexes[0]].getTasks()[indexes[1]].setIsImportant(false);
+                        btn.classList.toggle('active-btn', false);
+                    }
                 }
             } else {
-                (indexes[0] === 'all-tasks') ? 
-                    collections.getAllTasks().getTasks()[indexes[1]].setIsImportant(false) :
+                if(indexes[0] === 'all-tasks') {
+                    collections.getAllTasks().getTasks()[indexes[1]].setIsImportant(false);
+                } else {
                     collections.getMyProjects()[indexes[0]].getTasks()[indexes[1]].setIsImportant(false);
-                    displayTasks(currentList);
+                }
+                displayTasks(currentList);
             }
             populateStorage();
         })
@@ -580,29 +599,48 @@ function addToMyDay() {
     myDay.forEach(btn => {
         const index = btn.dataset.index;
         const indexes = btn.dataset.indexes.split(' ');
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
             if(currentList === 'all-tasks') {             
-                collections.getAllTasks().getTasks()[index].getIsMyDay() === false ?
-                    collections.getAllTasks().getTasks()[index].setIsMyDay(true) :                 
+                if(collections.getAllTasks().getTasks()[index].getIsMyDay() === false) {
+                    collections.getAllTasks().getTasks()[index].setIsMyDay(true);
+                    btn.classList.toggle('active-btn', true);
+                } else {
                     collections.getAllTasks().getTasks()[index].setIsMyDay(false);
+                    btn.classList.toggle('active-btn', false);
+                }
             } else if(Number.isInteger(+currentList)) {
-                collections.getMyProjects()[+currentList].getTasks()[index].getIsMyDay() === false ?
-                    collections.getMyProjects()[+currentList].getTasks()[index].setIsMyDay(true) :
+                if(collections.getMyProjects()[+currentList].getTasks()[index].getIsMyDay() === false) {
+                    collections.getMyProjects()[+currentList].getTasks()[index].setIsMyDay(true);
+                    btn.classList.toggle('active-btn', true);
+                } else {
                     collections.getMyProjects()[+currentList].getTasks()[index].setIsMyDay(false);
+                    btn.classList.toggle('active-btn', false);
+                }
             } else if(currentList === 'important') {
                 if(indexes[0] === 'all-tasks') {
-                    collections.getAllTasks().getTasks()[indexes[1]].getIsMyDay() === false ?
-                        collections.getAllTasks().getTasks()[indexes[1]].setIsMyDay(true) :
+                    if(collections.getAllTasks().getTasks()[indexes[1]].getIsMyDay() === false) {
+                        collections.getAllTasks().getTasks()[indexes[1]].setIsMyDay(true);
+                        btn.classList.toggle('active-btn', true);
+                    } else {
                         collections.getAllTasks().getTasks()[indexes[1]].setIsMyDay(false);
+                        btn.classList.toggle('active-btn', false);
+                    }
                 } else {
-                    collections.getMyProjects()[indexes[0]].getTasks()[indexes[1]].getIsMyDay() === false ?
-                        collections.getMyProjects()[indexes[0]].getTasks()[indexes[1]].setIsMyDay(true) :
+                    if(collections.getMyProjects()[indexes[0]].getTasks()[indexes[1]].getIsMyDay() === false) {
+                        collections.getMyProjects()[indexes[0]].getTasks()[indexes[1]].setIsMyDay(true);
+                        btn.classList.toggle('active-btn', true);
+                    }else {
                         collections.getMyProjects()[indexes[0]].getTasks()[indexes[1]].setIsMyDay(false);
+                        btn.classList.toggle('active-btn', false);
+                    }
                 }
             } else {
-                (indexes[0] === 'all-tasks') ? 
-                    collections.getAllTasks().getTasks()[indexes[1]].setIsMyDay(false) :
+                if(indexes[0] === 'all-tasks') {
+                    collections.getAllTasks().getTasks()[indexes[1]].setIsMyDay(false);
+                } else {
                     collections.getMyProjects()[indexes[0]].getTasks()[indexes[1]].setIsMyDay(false);
+                }
                     displayTasks(currentList);
             }
             populateStorage();
@@ -712,6 +750,7 @@ function displayTasks(selected) {
         const starIconTemplate = document.getElementById('star-icon');
         const starIcon = starIconTemplate.content.cloneNode(true);
         importantBtn.appendChild(starIcon);
+        if(task.getIsImportant() === true) importantBtn.classList.toggle('active-btn', true);
         hidden.appendChild(importantBtn);
 
         const myDayBtn = document.createElement('button');
@@ -721,6 +760,7 @@ function displayTasks(selected) {
         const iconTemplate = document.getElementById('sun-icon');
         const sunIcon = iconTemplate.content.cloneNode(true);
         myDayBtn.appendChild(sunIcon);
+        if(task.getIsMyDay() === true) myDayBtn.classList.toggle('active-btn', true);
         hidden.appendChild(myDayBtn);
 
         const editBtn = document.createElement('button');
