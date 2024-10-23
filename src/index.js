@@ -648,6 +648,35 @@ function addToMyDay() {
     })
 }
 
+//Check Checkbox
+function checkCheckbox() {
+    const labels = document.querySelectorAll('.checkbox-label');
+    labels.forEach(label => {
+        label.addEventListener('click', () => {
+            const id = label.getAttribute('for');
+            const indexes = label.dataset.indexes.split(' ');
+            const checkbox = document.getElementById(id);
+            console.log(indexes)
+            console.log(id)
+            console.log(checkbox.checked)
+            if(checkbox.checked == false) {
+                if(indexes[0] === 'all-tasks') {
+                    collections.getAllTasks().getTasks()[indexes[1]].setIsChecked(true);
+                } else {
+                    collections.getMyProjects()[indexes[0]].getTasks()[indexes[1]].setIsChecked(true);
+                }
+            } else {
+                if(indexes[0] === 'all-tasks') {
+                    collections.getAllTasks().getTasks()[indexes[1]].setIsChecked(false);
+                } else {
+                    collections.getMyProjects()[indexes[0]].getTasks()[indexes[1]].setIsChecked(false);
+                }
+            }
+            populateStorage();         
+        })
+    })
+}
+
 //Display Tasks
 function displayTasks(selected) {
     hideChildWithParent(document.getElementById('task-form'), true);
@@ -691,10 +720,12 @@ function displayTasks(selected) {
         const checkbox = document.createElement('input');
         checkbox.setAttribute('type', `checkbox`);
         checkbox.setAttribute('id', `check-${taskList.indexOf(task)}`);
+        if(task.getIsChecked() == true) checkbox.checked = true;
         item.appendChild(checkbox);
 
         const label = document.createElement('label');
         label.setAttribute('for', `check-${taskList.indexOf(task)}`);
+        label.classList.add('checkbox-label');
         label.setAttribute('data-indexes', `${task.getIndexes()}`);
         item.appendChild(label);
 
@@ -784,6 +815,7 @@ function displayTasks(selected) {
     deleteTask();
     markAsImportant();
     addToMyDay();
+    checkCheckbox();
 }
 displayTasks('my-day');
 
