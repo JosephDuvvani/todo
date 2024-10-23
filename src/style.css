@@ -3,6 +3,7 @@
     --clr-secondary: hsl(219, 52%, 17%);
     --clr-accent: hsl(14, 67%, 46%);
 
+    --clr-hover: hsl(219, 52%, 23%);
     --bg-clr-form: hsl(208, 100%, 30%);
     --clr-border-form: hsl(219, 10%, 51%);
     --clr-focus-input: hsl(200, 100%, 65%);
@@ -89,7 +90,11 @@ body {
 
 .main-projects > div:hover,
 .my-projects > .display-project:hover {
-    background-color: hsl(219, 52%, 23%);
+    background-color: var(--clr-hover);
+}
+
+.project.active {
+    background-color: var(--clr-hover);
 }
 
 .my-projects {
@@ -105,6 +110,7 @@ body {
     width: 1.5rem;
     fill: var(--clr-accent);
     margin-right: .5rem;
+    pointer-events: none;
 }
 
 .display-list {
@@ -115,6 +121,7 @@ body {
 .project-name {
     flex: 1;
     align-self: center;
+    pointer-events: none;
 }
 
 .edit-project,

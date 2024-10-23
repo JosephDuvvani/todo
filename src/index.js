@@ -232,7 +232,7 @@ function displayProjects() {
 
     projects.forEach(proj => {
         const item = document.createElement('li');
-        item.classList.add('display-project', 'item');
+        item.classList.add('display-project', 'item', 'project');
         item.setAttribute('data-index', `${projects.indexOf(proj)}`);
 
         const iconTemplate = document.getElementById('list-icon');
@@ -818,30 +818,19 @@ function displayTasks(selected) {
     checkCheckbox();
 }
 displayTasks('my-day');
-
-(function displayOnClick() {
-    const selected = document.querySelectorAll('.display-list');
-    const activeList = document.getElementById('tasks');
-
-    selected.forEach(proj => {
-        proj.addEventListener('click', (e) => {
-            const targ = e.target;
-            if(!targ.dataset.active) return;
-            const activeProject = targ.dataset.active;
-            activeList.dataset.current = activeProject;
-            
-            displayTasks(activeProject);
-        })
-    })
-})()
+projectOnClick();
 
 function projectOnClick() {
-    const selected = document.querySelectorAll('.display-project');
+    const selected = document.querySelectorAll('.project');
     const activeList = document.getElementById('tasks');
 
     selected.forEach(proj => {
         proj.addEventListener('click', (e) => {
+            selected.forEach(project => {
+                project.classList.toggle('active', false);
+            })
             const targ = e.target;
+            targ.classList.toggle('active', true);
             if(!targ.dataset.index) return;
             const activeProject = targ.dataset.index;
             activeList.dataset.current = activeProject;
