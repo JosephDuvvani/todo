@@ -211,7 +211,7 @@ input.title,
     border-bottom: 2px solid var(--clr-border-form);
 }
 
-input.title,
+input.title:focus,
 .form > [type="text"]:focus,
 .form > input:focus,
 select:focus {
