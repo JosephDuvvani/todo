@@ -656,9 +656,7 @@ function checkCheckbox() {
             const id = label.getAttribute('for');
             const indexes = label.dataset.indexes.split(' ');
             const checkbox = document.getElementById(id);
-            console.log(indexes)
-            console.log(id)
-            console.log(checkbox.checked)
+
             if(checkbox.checked == false) {
                 if(indexes[0] === 'all-tasks') {
                     collections.getAllTasks().getTasks()[indexes[1]].setIsChecked(true);

@@ -35,7 +35,7 @@ body {
     display: grid;
     grid-template-columns: minmax(5rem, 20rem) 1fr;
     grid-template-rows: min-content 1fr;
-    height: 100svh;
+    min-height: 100svh;
     padding: 1rem 2rem;
     font-family: sans-serif;
     color: var(--clr-primary);
