@@ -198,10 +198,11 @@ body {
     color: var(--clr-primary);
 }
 
-.form input[type="text"] {
+input.title {
     grid-column: 1/-1;
 }
 
+input.title,
 .form [type="text"] {
     margin-inline: .5rem;
     padding: .5rem;
@@ -210,6 +211,7 @@ body {
     border-bottom: 2px solid var(--clr-border-form);
 }
 
+input.title,
 .form > [type="text"]:focus,
 .form > input:focus,
 select:focus {
@@ -323,7 +325,7 @@ select:focus {
     border-radius: 0 10px 0 0;
 }
 
-.content .title {
+.content #title {
     font-size: 2rem;
     font-weight: 600;
     margin-bottom: 2rem;
