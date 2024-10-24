@@ -377,6 +377,7 @@ select:focus {
     padding: .5rem .8rem;
     margin-inline: .5rem;
     transition: background-position .3s ease-in-out;
+    border-radius: .5rem;
 }
 
 .task-item:hover {
@@ -624,12 +625,13 @@ select {
 .new-task {
     border-style: none;
     text-align: start;
-    padding: .5rem;
+    padding: .5rem 1rem;
     margin: 2rem 0 3rem;
     display: flex;
     align-items: center;
     gap: 1rem;
     background-color: var(--clr-accent);
+    border-radius: 50vh;
 }
 
 .new-task > span {
